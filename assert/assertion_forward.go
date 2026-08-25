@@ -293,6 +293,28 @@ func (a *Assertions) ErrorContainsf(theError error, contains string, msg string,
 	return ErrorContainsf(a.t, theError, contains, msg, args...)
 }
 
+// ErrorNotContains asserts that a function returned a non-nil error (i.e. an
+// error) and that the error does not contain the specified substring.
+//
+//	a.ErrorNotContains(err,  expectedErrorSubString)
+func (a *Assertions) ErrorNotContains(theError error, contains string, msgAndArgs ...interface{}) bool {
+	if h, ok := a.t.(tHelper); ok {
+		h.Helper()
+	}
+	return ErrorNotContains(a.t, theError, contains, msgAndArgs...)
+}
+
+// ErrorNotContainsf asserts that a function returned a non-nil error (i.e. an
+// error) and that the error does not contain the specified substring.
+//
+//	a.ErrorNotContainsf(err,  expectedErrorSubString, "error message %s", "formatted")
+func (a *Assertions) ErrorNotContainsf(theError error, contains string, msg string, args ...interface{}) bool {
+	if h, ok := a.t.(tHelper); ok {
+		h.Helper()
+	}
+	return ErrorNotContainsf(a.t, theError, contains, msg, args...)
+}
+
 // ErrorIs asserts that at least one of the errors in err's chain matches target.
 // This is a wrapper for errors.Is.
 func (a *Assertions) ErrorIs(err error, target error, msgAndArgs ...interface{}) bool {

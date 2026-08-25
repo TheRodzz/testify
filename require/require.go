@@ -363,6 +363,35 @@ func ErrorContainsf(t TestingT, theError error, contains string, msg string, arg
 	t.FailNow()
 }
 
+// ErrorNotContains asserts that a function returned a non-nil error (i.e. an
+// error) and that the error does not contain the specified substring.
+//
+//	actualObj, err := SomeFunction()
+//	require.ErrorNotContains(t, err,  expectedErrorSubString)
+func ErrorNotContains(t TestingT, theError error, contains string, msgAndArgs ...interface{}) {
+	if h, ok := t.(tHelper); ok {
+		h.Helper()
+	}
+	if assert.ErrorNotContains(t, theError, contains, msgAndArgs...) {
+		return
+	}
+	t.FailNow()
+}
+
+// ErrorNotContainsf asserts that a function returned a non-nil error (i.e. an
+// error) and that the error does not contain the specified substring.
+//
+//	require.ErrorNotContainsf(t, err,  expectedErrorSubString, "error message %s", "formatted")
+func ErrorNotContainsf(t TestingT, theError error, contains string, msg string, args ...interface{}) {
+	if h, ok := t.(tHelper); ok {
+		h.Helper()
+	}
+	if assert.ErrorNotContainsf(t, theError, contains, msg, args...) {
+		return
+	}
+	t.FailNow()
+}
+
 // ErrorIs asserts that at least one of the errors in err's chain matches target.
 // This is a wrapper for errors.Is.
 func ErrorIs(t TestingT, err error, target error, msgAndArgs ...interface{}) {
